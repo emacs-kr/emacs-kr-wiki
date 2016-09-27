@@ -1,0 +1,8 @@
+#+TITLE: Org mode
+#+AUTHOR: Wonjun Lee
+#+EMAIL: fpenguin23@gmail.com
+
+
+* Org mode
+* Org-capture
+* Org-agenda

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<!-- 2017-01-15 일 18:18 -->
+<meta  charset="utf-8" />
+<meta  htto-equiv="X-UA-Compatible" content="chrome=1" />
+<meta  name="generator" content="Org-mode with org-ioslide" />
+<meta  name="author" content="Wonjun Lee" />
+
+
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--This one seems to work all the time, but really small on ipad-->
+<!--<meta name="viewport" content="initial-scale=0.4">-->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="stylesheet" media="all" href="theme/css/default.css" />
+<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css" />
+<link rel="stylesheet" media="all" href="theme/css/small-icon.css" />
+<base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+<script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+
+   <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+
+<script src="js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML,local/local" type="text/javascript"></script>
+</head>
+<body style="opacity: 0">
+<slides class="layout-widescreen">
+<slide class="title-slide segue nobackground">
+       <aside class="gdbar"><img src="images/emacs-icon.png"></aside>
+       <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+       <hgroup class="auto-fadein">
+         <h1 data-config-title><!-- populated from slide_config.json --></h1>
+         <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+         <p data-config-presenter><!-- populated from slide_config.json --></p>
+       </hgroup>
+    </slide>
+  
+
+
+
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/emacs-icon.png"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-orga63fbdb" class="outline-2">
+<h2 id="orga63fbdb">Setting up org-gcal</h2>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
+<p>
+구글 캘린더와 연동 설정
+</p>
+
+
+</article>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-org8ad1088" class="outline-3">
+<h3 id="org8ad1088">Overview</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<ol>
+<li>구글 계정 설정</li>
+<li>Org-gcal</li>
+<li>Org-agenda and Org-capture</li>
+<li>Test your setting</li>
+</ol>
+
+<p>
+본 슬라이드의 내용은 다음을 참고하였습니다.
+</p>
+
+<p>
+<a href="http://cestlaz.github.io/posts/using-emacs-26-gcal/#.WHs9rJ9vaV5">http://cestlaz.github.io/posts/using-emacs-26-gcal/#.WHs9rJ9vaV5</a>
+</p>
+
+
+</article>
+
+</slide>
+
+
+</slide>
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/emacs-icon.png"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-orgdb71c48" class="outline-3">
+<h3 id="orgdb71c48">구글 계정 설정</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
+<p>
+캘린더 API 활성화, 연동을 위한 사용자 정보 얻기 
+</p>
+
+
+</article>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-org5164f36" class="outline-4">
+<h4 id="org5164f36">Calendar API 활성화</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<ol>
+<li><a href="https://console.developers.google.com/iam-admin/projects">g</a>oogle-developers-consol 으로 접속</li>
+<li>프로젝트 개설</li>
+<li>사용자 인증 정보로 이동</li>
+<li>Calendar API란에서 사용 설정</li>
+<li>사용자 인증 정보 탭으로 이동</li>
+<li>사용자 인증 정보 만들기/사용자 인증 정보 선택 도움말 클릭</li>
+<li>첫 번째 질문으로 3가지 선택란이 존재. 구글 캘린더 api, other ui,
+유저 데이터를 차례로 선택</li>
+<li>두 번째 질문에서 원하는 클라이언트 아이디로 생성</li>
+<li>OAuth 2.0 client id를 생성</li>
+</ol>
+
+
+</article>
+
+</slide>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-org03304d4" class="outline-4">
+<h4 id="org03304d4">연동을 위한 사용자 정보</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="larger" id="text-">
+<ul>
+<li><i>client id</i></li>
+<li><i>client secret id</i></li>
+</ul>
+
+<p>
+이 후 Gcal과 연동을 위해 필요.
+</p>
+
+
+</article>
+
+</slide>
+
+</slide>
+
+
+</slide>
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/emacs-icon.png"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-orgfe1444a" class="outline-3">
+<h3 id="orgfe1444a">Org-gcal</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
+<p>
+설치, 셋업, 유의사항 
+</p>
+
+
+</article>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orgc09957b" class="outline-4">
+<h4 id="orgc09957b">패키지 설치 및 설정</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="smaller" id="text-">
+<ul>
+<li>OAuth 2.0 client id의 <code>client id</code>, <code>client secret id</code> 가 필요.</li>
+<li>캘린더 주소 필요
+<ul>
+<li>구글 캘린더, 원하는 캘린더의 캘린더 환경설정, 캘린더 주소를 확인</li>
+</ul></li>
+<li>해당 캘린더와 동기화할 org 파일 path 지정</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="emacs-lisp">
+(use-package org-gcal
+  :ensure t
+  :init
+  :config
+  (setq <b>org-gcal-client-id "client id"</b>
+        <b>org-gcal-client-secret "client secret id"</b>
+        org-gcal-file-alist '(
+                              (<b>"your calander address"&gt;</b> . <b>"~/Dropbox/org/gcal.org"</b>))
+        ))
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-org7bf2a6e" class="outline-4">
+<h4 id="org7bf2a6e">유의사항</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<ul>
+<li>하나의 org파일과 하나의 캘린더만 연동 가능함</li>
+<li>여러 캘린더를 연동하기 위해서는 여러 org파일이 필요</li>
+<li>TODO 등과 같은 키워드가 연동 과정에서 모두 떨어져 나가 사용 불가능</li>
+</ul>
+
+
+</article>
+
+</slide>
+
+</slide>
+
+
+</slide>
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/emacs-icon.png"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-org88cff3d" class="outline-3">
+<h3 id="org88cff3d">Org-agenda, Org-capture</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
+<p>
+알아두면 편리한 추가기능 
+</p>
+
+
+</article>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-orge841c95" class="outline-4">
+<h4 id="orge841c95">Org-agenda and Org-capture</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<ul>
+<li><b>항상</b> 싱크된 캘린더 정보</li>
+<li>깔끔한 view</li>
+<li>편리하게 일정 입력 및 수정 가능</li>
+<li><b>Almost optional</b></li>
+</ul>
+
+
+</article>
+
+</slide>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-org6ef510c" class="outline-4">
+<h4 id="org6ef510c">Org-agenda, Org-capture 연동 설정</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="smaller" id="text-">
+<ul>
+<li>Org-agenda view를 킬때마다 구글 캘린더와 동기화</li>
+<li>Org-capture로 새로운 일정을 추가할 때 마다 캘린더와 동기화.</li>
+<li>Org-gcal-post-at-point 를 이용 gcal.org 이외의 아이템도 동기화 가능.</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="emacs-lisp">
+;; somewhere in your settings
+  (setq org-agenda-files (list "/path/to/agenda/org/file.org"
+                               "/path2/to/agenda/org/file.org"))
+</pre>
+
+</div>
+
+<div class="org-src-container">
+
+<pre class="prettyprint" data-lang="emacs-lisp">
+(use-package org-gcal
+  :ensure t
+  :init
+  <b>(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))</b>
+  <b>(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync)))</b>
+  :config
+  (setq org-gcal-client-id "client id"
+        org-gcal-client-secret "client secret id"
+        org-gcal-file-alist '(
+                              ("fpenguin23@gmail.com" . "~/Dropbox/org/gcal.org"))
+        ))
+</pre>
+
+</div>
+
+
+</article>
+
+</slide>
+
+</slide>
+
+
+
+</slide>
+<slide id="sec-" class=" segue dark quote nobackground" style="background-image: url(nil)">
+<aside class="gdbar right bottom"><img src="images/emacs-icon.png"></aside><hgroup class="">
+       <h2 class=" "><div id="outline-container-org7ea4b79" class="outline-3">
+<h3 id="org7ea4b79">Test your setting</h3>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="flexbox vleft auto-fadein" id="text-">
+<p>
+설정한 세팅이 잘 동작하는지 확인해보자.
+</p>
+
+
+</article>
+
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-org9b371c1" class="outline-4">
+<h4 id="org9b371c1">구글 캘린더</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<ol>
+<li>구글 캘린더에 일정 추가</li>
+<li>Emacs 에서 아젠다 뷰로 확인</li>
+</ol>
+
+<p>
+온라인에서 일정 삭제/추가는 로컬에서 모두 싱크됨.
+</p>
+
+
+</article>
+
+</slide>
+</slide>
+<slide id="sec-"  >
+<hgroup class="">
+       <h2 class=" "><div id="outline-container-org465e10a" class="outline-4">
+<h4 id="org465e10a">이맥스</h4>
+</div>
+</h2>
+       <h3></h3>
+       </hgroup>
+<article class="" id="text-">
+<ol>
+<li>캡쳐를 통해 일정 추가</li>
+<li>구글 캘린더에서 연동되는지 확인</li>
+</ol>
+
+<p>
+로컬에서 일정 삭제는 온라인에서 싱크되지 않음. 
+캡처를 통한 일정 추가는 싱크됨.
+</p>
+
+
+</article>
+
+</slide>
+
+</slide>
+
+</slide>
+
+
+
+</slide>
+<slide id="sec-" class=" thank-you-slide segue nobackground" style="background-image: url(nil)">
+<aside class="gdbar right"><img src="images/emacs-icon.png"></aside><article class="flexbox vleft auto-fadein" id="text-">
+<h2>
+  <p>Thank You ˊ・ω・ˋ</p>
+</h2>
+<br>
+<p class="auto-fadein" data-config-contact>
+</p>
+</article>
+
+</slide>
+<slide class="backdrop"></slide>
+</slides> 
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body> 
+
+</html>

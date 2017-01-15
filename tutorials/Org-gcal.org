@@ -1,0 +1,170 @@
+#+title: Org-gcal
+#+subtitle: 이맥스와 구글 캘린더 연동하기 
+#+email: fpenguin23@gmail.com
+#+author: Wonjun Lee
+#+company: AMEBA
+#+OPTIONS: num:nil 
+#+FAVICON: images/org-icon.png
+#+ICON: images/emacs-icon.png
+
+
+
+
+* Setting up org-gcal
+:PROPERTIES:
+:SLIDE:    segue dark quote
+:ASIDE:    right bottom
+:ARTICLE:  flexbox vleft auto-fadein
+:END:
+
+구글 캘린더와 연동 설정
+
+**  Overview
+1. 구글 계정 설정  
+2. Org-gcal
+3. Org-agenda and Org-capture
+4. Test your setting
+
+본 슬라이드의 내용은 다음을 참고하였습니다.
+
+http://cestlaz.github.io/posts/using-emacs-26-gcal/#.WHs9rJ9vaV5
+
+ 
+** 구글 계정 설정 
+:PROPERTIES:
+:SLIDE:    segue dark quote
+:ASIDE:    right bottom
+:ARTICLE:  flexbox vleft auto-fadein
+:END:
+캘린더 API 활성화, 연동을 위한 사용자 정보 얻기 
+
+*** Calendar API 활성화 
+1. [[https://console.developers.google.com/iam-admin/projects][g]]oogle-developers-consol 으로 접속
+2. 프로젝트 개설
+3. 사용자 인증 정보로 이동
+4. Calendar API란에서 사용 설정
+5. 사용자 인증 정보 탭으로 이동
+6. 사용자 인증 정보 만들기/사용자 인증 정보 선택 도움말 클릭
+7. 첫 번째 질문으로 3가지 선택란이 존재. 구글 캘린더 api, other ui,
+   유저 데이터를 차례로 선택
+8. 두 번째 질문에서 원하는 클라이언트 아이디로 생성
+9. OAuth 2.0 client id를 생성
+
+*** 연동을 위한 사용자 정보
+:PROPERTIES:
+:ARTICLE:  larger
+:END:
+- /client id/
+- /client secret id/
+  
+이 후 Gcal과 연동을 위해 필요.
+
+
+** Org-gcal
+:PROPERTIES:
+:SLIDE:    segue dark quote
+:ASIDE:    right bottom
+:ARTICLE:  flexbox vleft auto-fadein
+:END:
+설치, 셋업, 유의사항 
+
+*** 패키지 설치 및 설정 
+:PROPERTIES:
+:ARTICLE:  smaller
+:END:
+- OAuth 2.0 client id의 =client id=, =client secret id= 가 필요.
+- 캘린더 주소 필요
+  - 구글 캘린더, 원하는 캘린더의 캘린더 환경설정, 캘린더 주소를 확인
+- 해당 캘린더와 동기화할 org 파일 path 지정
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-gcal
+    :ensure t
+    :init
+    :config
+    (setq <b>org-gcal-client-id "client id"</b>
+          <b>org-gcal-client-secret "client secret id"</b>
+          org-gcal-file-alist '(
+                                (<b>"your calander address"></b> . <b>"~/Dropbox/org/gcal.org"</b>))
+          ))
+#+END_SRC
+
+*** 유의사항 
+- 하나의 org파일과 하나의 캘린더만 연동 가능함
+- 여러 캘린더를 연동하기 위해서는 여러 org파일이 필요
+- TODO 등과 같은 키워드가 연동 과정에서 모두 떨어져 나가 사용 불가능
+
+  
+** Org-agenda, Org-capture
+:PROPERTIES:
+:SLIDE:    segue dark quote
+:ASIDE:    right bottom
+:ARTICLE:  flexbox vleft auto-fadein
+:END:
+알아두면 편리한 추가기능 
+*** Org-agenda and Org-capture
+  - *항상* 싱크된 캘린더 정보
+  - 깔끔한 view
+  - 편리하게 일정 입력 및 수정 가능
+  - *Almost optional*
+  
+*** Org-agenda, Org-capture 연동 설정 
+:PROPERTIES:
+:ARTICLE:  smaller
+:END:
+- Org-agenda view를 킬때마다 구글 캘린더와 동기화
+- Org-capture로 새로운 일정을 추가할 때 마다 캘린더와 동기화.
+- Org-gcal-post-at-point 를 이용 gcal.org 이외의 아이템도 동기화 가능.
+
+#+BEGIN_SRC emacs-lisp
+;; somewhere in your settings
+  (setq org-agenda-files (list "/path/to/agenda/org/file.org"
+                               "/path2/to/agenda/org/file.org"))
+#+END_SRC
+ 
+#+BEGIN_SRC emacs-lisp
+  (use-package org-gcal
+    :ensure t
+    :init
+    <b>(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync)))</b>
+    <b>(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync)))</b>
+    :config
+    (setq org-gcal-client-id "client id"
+          org-gcal-client-secret "client secret id"
+          org-gcal-file-alist '(
+                                ("fpenguin23@gmail.com" . "~/Dropbox/org/gcal.org"))
+          ))
+#+END_SRC
+
+
+
+** Test your setting
+:PROPERTIES:
+:SLIDE:    segue dark quote
+:ASIDE:    right bottom
+:ARTICLE:  flexbox vleft auto-fadein
+:END:
+
+설정한 세팅이 잘 동작하는지 확인해보자.
+
+*** 구글 캘린더 
+1. 구글 캘린더에 일정 추가
+2. Emacs 에서 아젠다 뷰로 확인
+   
+온라인에서 일정 삭제/추가는 로컬에서 모두 싱크됨.
+*** 이맥스 
+1. 캡쳐를 통해 일정 추가
+2. 구글 캘린더에서 연동되는지 확인
+
+로컬에서 일정 삭제는 온라인에서 싱크되지 않음. 
+캡처를 통한 일정 추가는 싱크됨.
+
+
+
+* Thank You ˊ・ω・ˋ
+:PROPERTIES:
+:SLIDE:    thank-you-slide segue
+:ASIDE:    right
+:ARTICLE:  flexbox vleft auto-fadein
+:END:
+
